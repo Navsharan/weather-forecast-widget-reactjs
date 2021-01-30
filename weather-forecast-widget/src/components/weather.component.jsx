@@ -1,19 +1,20 @@
 import React from 'react';
 
-const Weather = () => {
+const Weather = (props) => {
     return (
         <div className="container">
             <div className="cards">
-                <h1>City</h1>
+                <h1>{props.city}, {props.country}</h1>
                 <h4 className="py-4">
                     <i className="wi wi-day-sunny display-1"></i>
                 </h4>
-                <h2 className="py-2">26&deg;</h2>
+                <h2 className="py-2">{props.temp_celsius}&deg;C</h2>
                 
                 {/** Show min and max temp */}
-                {tempMinMax(15, 28)}
+                {tempMinMax(props.temp_min, props.temp_max)}
 
-                <h3 className="py-3">Sunny</h3>
+                <h5 className="py-1">{props.description}</h5>
+                <p className="py-1">Wind: {props.windspeed}km/h {props.wind_direction}</p>
             </div>
         </div>
     )
@@ -21,10 +22,9 @@ const Weather = () => {
 
 function tempMinMax(min,max){
     return (
-        <h4>
-            <span className="px-4">{min}&deg;</span>
-            <span className="px-4">{max}&deg;</span>
-        </h4>
+        <h5>
+            <span className="px-4">{min}&deg;C / {max}&deg;C</span>
+        </h5>
     )
 }
 
