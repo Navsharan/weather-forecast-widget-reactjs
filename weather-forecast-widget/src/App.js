@@ -1,10 +1,9 @@
 import React from 'react';
-
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'weather-icons/css/weather-icons.css';
 import Weather from './components/weather.component';
 
+// Location code
 const woeid = 1105779;
 class App extends React.Component {
   constructor() {
@@ -12,7 +11,7 @@ class App extends React.Component {
     this.state = {
       city: undefined,
       country: undefined,
-      icon: undefined,
+      icon_abbr: undefined,
       main: undefined,
       celsius: undefined,
       temp_min: undefined,
@@ -26,6 +25,7 @@ class App extends React.Component {
     this.getWeather();
   }
 
+  // Get weather data from MetaWeather API.
   getWeather = async () => {
     const api_call = await fetch(`https://cors-anywhere.herokuapp.com/https://www.metaweather.com/api/location/${woeid}/`);
 
@@ -36,6 +36,7 @@ class App extends React.Component {
     this.setState({
       city: response.title,
       country: response.parent.title,
+      icon_abbr: response.consolidated_weather[1].weather_state_abbr,
       celsius: parseInt(response.consolidated_weather[0].the_temp),
       temp_min: parseInt(response.consolidated_weather[0].min_temp),
       temp_max: parseInt(response.consolidated_weather[0].max_temp),
@@ -51,6 +52,7 @@ class App extends React.Component {
         <Weather 
         city={this.state.city}
         country={this.state.country}
+        icon_abbr={this.state.icon_abbr}
         temp_celsius={this.state.celsius}
         temp_min={this.state.temp_min}
         temp_max={this.state.temp_max}
